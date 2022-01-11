@@ -4,16 +4,20 @@ value = input("Welcome to the menu. Options are listed below: \n\t 1. Roll \n\t 
 #print(f'it is of type{type(value)}.')
 
 def func1(val):
-    return val*val
+    return val**val
 def func2(val):
-    return val*val
+    return val**val
 def func3(val):
-    return val*val
+    return val**val
 
 while True:
     if value.isdigit()== True: # .isdigit() is to check if the input is a digit
         value = int(value)
-        break #exit the loop when the correct data type is enterd.
+        if value > 3 or value <1: #if value is out of option range
+            value = input("Please enter a number between 1 and 3 only:")
+            continue #skip the rest of the loop, start from isdigit() to check again
+        else:
+            break #exit the loop when the correct data type is enterd.
     else:
         value = input("Invalid input, please provide an integer:") #ask user to reenter value
         
