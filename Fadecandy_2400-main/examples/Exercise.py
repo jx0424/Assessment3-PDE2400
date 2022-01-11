@@ -3,6 +3,13 @@ value = input("Welcome to the menu. Options are listed below: \n\t 1. Roll \n\t 
 #print("The value you input is:", value)
 #print(f'it is of type{type(value)}.')
 
+def func1(val):
+    return val*val
+def func2(val):
+    return val*val
+def func3(val):
+    return val*val
+
 while True:
     if value.isdigit()== True: # .isdigit() is to check if the input is a digit
         value = int(value)
@@ -13,11 +20,11 @@ while True:
 #print("The converted value is:", value)
 #print(f'it is of type{type(value)}.')
 
-
+#compare nuimeric value to choices available, pergorm associated func
 if value == 1:
-    func1(value)
+    print(func1(value))
 elif value ==2:
-    func2(value)
+    print(func2(value))
 elif value ==3:
-    func3(value)
+    print(func3(value))
 
