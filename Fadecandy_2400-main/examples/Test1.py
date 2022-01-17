@@ -7,6 +7,7 @@ leds=[(255,255,255)]*360
 
 client = opc.Client('localhost:7890')
 client.put_pixels(leds)
+client.put_pixels(leds)
 
 #-----------------User input-------------------#
 user_Input = input ("Please select one of the options below: \n\t 1.Tic Tac Toe \n\t 2.RGB lights \n\t 3.Malaysia Flag \n Type the number of your choice:")
@@ -21,10 +22,20 @@ while True:
             break #To exit the loop when appropriate input is entered.
     else:
         user_Input = input ("Please only retype a number:") #If user enter anything other than numbers, this will prompt and ask user to input number only.
+
+#--------------Fuction definitions------------#
+def rgb_func():
+    led = 0
+    while led<60: #scroll through all rows at the same time
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,255)
+        client.put_pixels(leds)
+        time.sleep(.1)
+        led = led + 1
     
 #Performing the functions base on user's input.
 if user_Input == 1:
-    print (user_Input)
+    rgb_func()
 elif user_Input == 2:
     print (user_Input)
 elif user_Input == 3:
