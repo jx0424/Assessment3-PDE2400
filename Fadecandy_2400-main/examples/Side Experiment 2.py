@@ -2,12 +2,10 @@ from datetime import date
 from datetime import time
 from datetime import datetime
 
-#to get the time and date from user's computer
+#to get the date from user's computer
 def getDateTime():
-    today_date = date.today()
-    current_Time = datetime.now()
-    print(today_date)
-    print(current_Time)
+    today_year = date.today().year
+    print(today_year)
 
 #just to test and print out the outcome
 if __name__ == "__main__":
