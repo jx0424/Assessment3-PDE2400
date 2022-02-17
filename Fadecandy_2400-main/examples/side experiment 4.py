@@ -202,11 +202,6 @@ def printSmiley():
     led=0
     while led <3:
         leds[231+led] = (225,255,0)
-        client.put_pixels(leds)
-        led=led+1
-        sleep(0.1)
-    led= 0
-    while led <3:
         leds[291+led] = (0,0,255)
         client.put_pixels(leds)
         led = led +1
@@ -240,11 +235,6 @@ def printSad():
     led=0
     while led <3:
         leds[231+led] = (255,0,0)
-        client.put_pixels(leds)
-        led=led+1
-        sleep(0.1)
-    led= 0
-    while led <=3:
         leds[291+led] = (225,255,0)
         client.put_pixels(leds)
         led = led +1
