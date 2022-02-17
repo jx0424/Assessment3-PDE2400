@@ -5,6 +5,11 @@ import colorsys
 from datetime import date
 from time import sleep 
 
+leds=[(255,255,255)]*360
+client = opc.Client('localhost:7890')
+client.put_pixels(leds)
+client.put_pixels(leds)
+
 
 #---------------------Functions for Animation 1 ----------------------------
 def vortex():
@@ -276,8 +281,96 @@ def printSad():
     client.put_pixels(leds)
     sleep(0.1)
 
+#-------------Function for Animation 3 (RainDrop)--------------------
+def rainDrop():
+    #leds=[(255,255,255)]*360
+    #client = opc.Client('localhost:7890')
+    #client.put_pixels(leds)
+    #client.put_pixels(leds)
+
+    global counter
+    counter =0
+    flood = 0
+    while True: 
+        leds=[(0,0,0)]*360
+        client.put_pixels(leds)
+        led=0
+        while led <59:
+            for rows in range(6):
+                leds[led+rows*60] = (0,255,255)
+                client.put_pixels(leds)
+                led=led+1
+                sleep(0.01)
+        flood = accRain(counter,flood)
+        counter = counter +1      
+        if counter ==6:
+            break
+        
+def accRain(counter,flood):
+    leds = 0
+    print(counter)
+    if counter == 0:
+        leds=[(0,0,0)]*360
+        client = opc.Client('localhost:7890')
+        client.put_pixels(leds)
+        for led in range(60):
+            leds[300+led]= (0,255,255)
+            client.put_pixels(leds)
+            led = led +1
+            sleep(0.001)
+        
+    if counter == 1:
+        leds = flood
+        client = opc.Client('localhost:7890')
+        client.put_pixels(leds)
+        for led in range(60):
+            leds[240+led]= (0,255,255)
+            client.put_pixels(leds)
+            led = led +1
+            sleep(0.001)
+    if counter == 2:
+        leds = flood
+        client = opc.Client('localhost:7890')
+        client.put_pixels(leds)
+        for led in range(60):
+            leds[180+led]= (0,255,255)
+            client.put_pixels(leds)
+            led = led +1
+            sleep(0.001)
+    if counter == 3:
+        leds = flood
+        client = opc.Client('localhost:7890')
+        client.put_pixels(leds)
+        for led in range(60):
+            leds[120+led]= (0,255,255)
+            client.put_pixels(leds)
+            led = led +1
+            sleep(0.001)
+    if counter == 4:
+        leds = flood
+        client = opc.Client('localhost:7890')
+        client.put_pixels(leds)
+        for led in range(60):
+            leds[60+led]= (0,255,255)
+            client.put_pixels(leds)
+            led = led +1
+            sleep(0.001)
+    if counter == 5:
+        leds = flood
+        client = opc.Client('localhost:7890')
+        client.put_pixels(leds)
+        for led in range(60):
+            leds[0+led]= (0,255,255)
+            client.put_pixels(leds)
+            led = led +1
+            sleep(0.001)
+    return leds            
+
+
+
 #call function
 #vortex()
+rainDrop()
 if __name__== "__main__":
     leds=[(255,255,255)]*360
     client = opc.Client('localhost:7890')
