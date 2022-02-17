@@ -2,6 +2,7 @@ import opc
 import random
 import time
 import colorsys
+from datetime import date
 
 #create a function for first animation(vortex)
 def vortex():
@@ -36,11 +37,16 @@ def vortex():
         if counter == 5:
             break
 
+#to get the time and date from user's computer
+def getDateTime():
+    today_year = date.today().year
+    print(today_year)
+
+
 #create a function for second animation
-#def 
-
-
+#def year_printer():
 
         
 #call function
-vortex()
+#vortex()
+getDateTime()
