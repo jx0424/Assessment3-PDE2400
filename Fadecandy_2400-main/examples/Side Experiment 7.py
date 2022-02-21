@@ -74,10 +74,10 @@ while True:
         for led in range(5):
             leds[randomLoc-led*60]=(255,0,255)
             client.put_pixels(leds)
-            sleep(0.5)
+            sleep(0.3)
             leds[randomLoc-led*60]=(0,0,0)
             client.put_pixels(leds)
-            sleep(0.5)
+            sleep(0.3)
             led = led +1
         led=0
         for rows in range(6):
