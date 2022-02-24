@@ -10,6 +10,121 @@ client = opc.Client('localhost:7890')
 client.put_pixels(leds)
 client.put_pixels(leds)
 
+def Welcome():
+#----------------Letter W----------------------------#
+    for rows in range(5):
+        leds[62+rows*60]=(148,0,211)
+        leds[66+rows*60]=(148,0,211)
+        client.put_pixels(leds)
+        sleep(0.1)
+    led=0
+    for rows in range(3):
+        leds[302+led-rows*60]=(148,0,211)
+        leds[306-led-rows*60]=(148,0,211)
+        client.put_pixels(leds)
+        led=led+1
+        sleep(0.1)
+
+#--------------Letter E-----------------------------#
+    for led in range(5):
+        leds[69+led]=(75,0,130)
+        leds[189+led]=(75,0,130)
+        leds[309+led]=(75,0,130)
+        client.put_pixels(leds)
+        led=led+1
+        sleep(0.1)
+    for rows in range(5):
+        leds[69+rows*60]=(75,0,130)
+        client.put_pixels(leds)
+        sleep(0.1)
+        
+#-------------Letter L------------------------------#
+    for rows in range(5):
+        leds[76+rows*60]=(0, 0, 255)	
+        client.put_pixels(leds)
+        sleep(0.1)
+    for led in range(5):
+        leds[316+led]=(0, 0, 255)
+        client.put_pixels(leds)
+        sleep(0.1)
+
+#-------------------Letter C------------------------#
+    for rows in range(5):
+        leds[83+rows*60]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.1)
+    for led in range(5):
+        leds[83+led]=(0,255,0)
+        leds[323+led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.1)
+
+#-----------------Letter O--------------------------#
+    for rows in range(5):
+        leds[90+rows*60]=(255,255,0)
+        leds[94+rows*60]=(255,255,0)    
+        client.put_pixels(leds)
+        sleep(0.1)
+    for led in range(5):
+        leds[90+led]=(255,255,0)
+        leds[330+led]=(255,255,0)
+        client.put_pixels(leds)
+        sleep(0.1)
+
+#---------------Letter M---------------------------#
+    for rows in range(5):
+        leds[97+rows*60]=(255,127,0)
+        leds[101+rows*60]=(255,127,0)    
+        client.put_pixels(leds)
+        sleep(0.1)
+    led=0
+    for rows in range(3):
+        leds[97+led+rows*60]=(255,127,0)
+        leds[101-led+rows*60]=(255,127,0)
+        client.put_pixels(leds)
+        led=led+1
+        sleep(0.1)
+
+#-------------Letter 2ndE--------------------------#
+    for led in range(5):
+        leds[104+led]=(255,0,0)
+        leds[224+led]=(255,0,0)
+        leds[344+led]=(255,0,0)
+        client.put_pixels(leds)
+        led=led+1
+        sleep(0.1)
+    for rows in range(5):
+        leds[104+rows*60]=(255,0,0)
+        client.put_pixels(leds)
+        sleep(0.1)
+
+#----------- 1st !-------------------------------#
+    for rows in range(3):
+        leds[111+rows*60]=(255,255,255)
+        client.put_pixels(leds)
+        sleep(0.1)
+    leds[351]=(255,255,255)
+    client.put_pixels(leds)
+    sleep(0.1)    
+
+#----------- 2nd !-------------------------------#
+    for rows in range(3):
+        leds[114+rows*60]=(155,155,155)
+        client.put_pixels(leds)
+        sleep(0.1)
+    leds[354]=(155,155,155)
+    client.put_pixels(leds)
+    sleep(0.1)    
+
+#----------- 3rd !-------------------------------#
+    for rows in range(3):
+        leds[117+rows*60]=(55,55,55)
+        client.put_pixels(leds)
+        sleep(0.1)
+    leds[357]=(55,55,55)
+    client.put_pixels(leds)
+    sleep(0.1)    
+
 
 #---------------------Functions for Animation 1(Vortex)----------------------------
 def vortex():
@@ -363,97 +478,98 @@ def accRain(counter,flood):
 
 #------------------------ Functions for Animation 4(Sun Rise and Dawn)-------------------
 def mountain():
-    while True:
+    leds=[(0,0,0)]*360
+    client.put_pixels(leds)
         #First mountain generation
-        for led in range(12):
-            leds[303+led]=(0,255,0)
-            leds[326-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(10):
-            leds[244+led]=(0,255,0)
-            leds[265-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(8):
-            leds[185+led]=(0,255,0)
-            leds[204-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(6):
-            leds[126+led]=(0,255,0)
-            leds[143-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(4):
-            leds[67+led]=(0,255,0)
-            leds[82-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(2):
-            leds[8+led]=(0,255,0)
-            leds[21-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        led =0
-        while led < 6:
-            leds[327+led]=(255,255,255)
-            leds[267+led]=(255,255,255)
-            leds[207+led]=(255,255,255)
-            leds[147+led]=(255,255,255)
-            leds[87+led]=(255,255,255)
-            leds[27+led]=(255,255,255)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1          
+    for led in range(12):
+        leds[303+led]=(0,255,0)
+        leds[326-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(10):
+        leds[244+led]=(0,255,0)
+        leds[265-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(8):
+        leds[185+led]=(0,255,0)
+        leds[204-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(6):
+        leds[126+led]=(0,255,0)
+        leds[143-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(4):
+        leds[67+led]=(0,255,0)
+        leds[82-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(2):
+        leds[8+led]=(0,255,0)
+        leds[21-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    led =0
+    while led < 6:
+        leds[327+led]=(255,255,255)
+        leds[267+led]=(255,255,255)
+        leds[207+led]=(255,255,255)
+        leds[147+led]=(255,255,255)
+        leds[87+led]=(255,255,255)
+        leds[27+led]=(255,255,255)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1          
         #2nd mountain generation
-        for led in range(12):
-            leds[333+led]=(0,255,0)
-            leds[356-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(10):
-            leds[274+led]=(0,255,0)
-            leds[295-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(8):
-            leds[215+led]=(0,255,0)
-            leds[234-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(6):
-            leds[156+led]=(0,255,0)
-            leds[173-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(4):
-            leds[97+led]=(0,255,0)
-            leds[112-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        for led in range(2):
-            leds[38+led]=(0,255,0)
-            leds[51-led]=(0,255,0)
-            client.put_pixels(leds)
-            sleep(0.01)
-            led = led +1
-        sunRise()
-        sleep(1)
-        sunDown()
-        if counter ==3:
-            break
+    for led in range(12):
+        leds[333+led]=(0,255,0)
+        leds[356-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(10):
+        leds[274+led]=(0,255,0)
+        leds[295-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(8):
+        leds[215+led]=(0,255,0)
+        leds[234-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(6):
+        leds[156+led]=(0,255,0)
+        leds[173-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(4):
+        leds[97+led]=(0,255,0)
+        leds[112-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    for led in range(2):
+        leds[38+led]=(0,255,0)
+        leds[51-led]=(0,255,0)
+        client.put_pixels(leds)
+        sleep(0.01)
+        led = led +1
+    sunRise()
+    sleep(1)
+    sunDown()
+    #if counter ==3:
+       # break
      
 def sunRise():
     global counter
@@ -560,15 +676,122 @@ def sunDown():
         print(counter)
         counter = counter +1
         
+#-----------------------------Animation 5 (FireWorks)-------------------------#
+def fireWorks():
+    leds=[(0,0,0)]*360
+    client.put_pixels(leds)
+    Fcounter = 0
+    while True:
+        randExplosion = random.randint(0,3)
+        Fhappened= False
+        print(randExplosion)
+        randomLoc = random.randint(300,359)
+        if Fcounter == 0:
+            for led in range(5):
+                leds[randomLoc-led*60]=(255,0,255)
+                client.put_pixels(leds)
+                sleep(0.3)
+                leds[randomLoc-led*60]=(0,0,0)
+                client.put_pixels(leds)
+                sleep(0.3)
+                led = led +1
+            Fhappened = 1
+                
+        if Fcounter == 1:
+            for led in range(5):
+                leds[randomLoc-led*60]=(255,0,255)
+                client.put_pixels(leds)
+                sleep(0.3)
+                leds[randomLoc-led*60]=(0,0,0)
+                client.put_pixels(leds)
+                sleep(0.3)
+                led = led +1
+            Fhappened = 1
+            
+        if Fcounter == 2:
+            for led in range(5):
+                leds[randomLoc-led*60]=(255,0,255)
+                client.put_pixels(leds)
+                sleep(0.3)
+                leds[randomLoc-led*60]=(0,0,0)
+                client.put_pixels(leds)
+                sleep(0.3)
+                led = led +1
+            Fhappened = 1
 
+        if Fcounter ==3:
+            for led in range(5):
+                leds[randomLoc-led*60]=(255,0,255)
+                client.put_pixels(leds)
+                sleep(0.3)
+                leds[randomLoc-led*60]=(0,0,0)
+                client.put_pixels(leds)
+                sleep(0.3)
+                led = led +1
+            Fhappened = 1
+
+        if randExplosion == 0 and Fhappened == 1:
+            led=0
+            for rows in range(6):
+                leds[2+led+rows*60] = (0,255,255)
+                leds[302+led-rows*60] = (0,255,255)
+                client.put_pixels(leds)
+                led=led+1
+            sleep(0.5)
+            leds= [(0,0,0)]*360
+            client.put_pixels(leds)
+            sleep(0.8)
+            
+        if randExplosion == 1 and Fhappened == 1:
+            led=0
+            for rows in range(6):
+                leds[16+led+rows*60] = (0,255,255)
+                leds[316+led-rows*60] = (0,255,255)
+                client.put_pixels(leds)
+                led=led+1
+            sleep(0.5)
+            leds= [(0,0,0)]*360
+            client.put_pixels(leds)
+            sleep(0.8)
+
+        if randExplosion == 2 and Fhappened == 1:
+            led=0
+            for rows in range(6):
+                leds[30+led+rows*60] = (0,255,255)
+                leds[330+led-rows*60] = (0,255,255)
+                client.put_pixels(leds)
+                led=led+1
+            sleep(0.5)
+            leds= [(0,0,0)]*360
+            client.put_pixels(leds)
+            sleep(0.8)
+
+        if randExplosion == 3 and Fhappened == 1:
+            led=0
+            for rows in range(6):
+                leds[44+led+rows*60] = (0,255,255)
+                leds[344+led-rows*60] = (0,255,255)
+                client.put_pixels(leds)
+                led=led+1
+            sleep(0.5)
+            leds= [(0,0,0)]*360
+            client.put_pixels(leds)
+            sleep(0.8) 
+            
+        Fcounter = Fcounter +1    
+        if Fcounter == 4:
+            break
 
 
 
 #call function
+#Welcome()
+fireWorks()
 #vortex()
-mountain()
-rainDrop()
+#mountain()
+#rainDrop()
 if __name__== "__main__":
+    sleep(1)
     leds=[(255,255,255)]*360
     client = opc.Client('localhost:7890')
     client.put_pixels(leds)
