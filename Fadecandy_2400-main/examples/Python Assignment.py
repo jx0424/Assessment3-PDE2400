@@ -2,7 +2,6 @@ import opc
 import random
 import time
 import colorsys
-from datetime import date
 from time import sleep 
 
 leds=[(0,0,0)]*360
@@ -160,6 +159,28 @@ def vortex():
             break
 
 #-----------------------------Fucntions for Animation 2 (Year 2022)-----------------------------#
+def Year2022Sad():
+    printY()
+    printE()
+    printA()
+    printR()
+    print_1st2()
+    print0()
+    print_2nd2()
+    print_3rd2()
+    printSad()
+
+def Year2022Happy():
+    printY()
+    printE()
+    printA()
+    printR()
+    print_1st2()
+    print0()
+    print_2nd2()
+    print_3rd2()
+    printSmiley()
+      
 #print the letter Y
 def printY():
     for rows in range(4):
@@ -180,23 +201,11 @@ def printE():
     led = 0
     while led <3:
         leds[69+led] = (255,127,0)
-        client.put_pixels(leds)
-        sleep(0.1)
-        led = led +1
-    led = 0
-    while led <3:
         leds[189+led] = (255,127,0)
-        client.put_pixels(leds)
-        sleep(0.1)
-        led = led + 1
-    led = 0
-    while led <3:
         leds[309+led]=(255,127,0)
         client.put_pixels(leds)
         sleep(0.1)
         led = led +1
-    #client.put_pixels(leds)
-
 
 #print the letter A
 def printA():
@@ -208,12 +217,12 @@ def printA():
         leds[137 + rows*60]=(255,255,0)
         client.put_pixels(leds)
         sleep(0.1)
-    leds[75]=(255,255,0)
-    leds[76]=(255,255,0)
-    leds[195]=(255,255,0)
-    leds[196]=(255,255,0)
-    client.put_pixels(leds)
-    sleep(0.1)
+    for led in range(2):
+        leds[75+led]=(255,255,0)
+        leds[195+led]=(255,255,0)
+        client.put_pixels(leds)
+        sleep(0.1)
+        led = led +1
 
 #print the letter R
 def printR():
@@ -331,31 +340,20 @@ def print_3rd2():
 
 #print smiley face
 def printSmiley():
-    for rows in range (5):
-        leds[109+rows*60]=(225,255,0)
-        leds[115+rows*60]=(225,255,0)
+    for led in range(7):
+        leds[109+led]=(255,255,0)
+        leds[169+led]=(255,255,0)
+        leds[229+led]=(255,255,0)
+        leds[289+led]=(255,255,0)
+        leds[349+led]=(255,255,0)
         client.put_pixels(leds)
-        sleep(0.1)
-        
-    led = 0
-    while led <= 5:
-        leds[110+led] = (225,255,0)
-        leds[349+led] = (225,255,0)
-        client.put_pixels(leds)
-        led=led+1
         sleep(0.1)
     led=0
     while led <3:
-        leds[231+led] = (225,255,0)
         leds[291+led] = (0,0,255)
         client.put_pixels(leds)
         led = led +1
         sleep (0.1)
-    leds[170]= (225,255,0)  
-    leds[172]= (225,255,0)  
-    leds[174]= (225,255,0)
-    leds[290]= (225,255,0)  
-    leds[294]= (225,255,0)
     leds[230] = (0,0,255)
     leds[173] = (0,0,255)
     leds[171] = (0,0,255)
@@ -363,36 +361,26 @@ def printSmiley():
     client.put_pixels(leds)
     sleep(0.1)
 
+#Print Sad Face 
 def printSad():
-    for rows in range (5):
-        leds[109+rows*60]=(225,255,0)
-        leds[115+rows*60]=(225,255,0)
+    for led in range(7):
+        leds[109+led]=(255,255,0)
+        leds[169+led]=(255,255,0)
+        leds[229+led]=(255,255,0)
+        leds[289+led]=(255,255,0)
+        leds[349+led]=(255,255,0)
         client.put_pixels(leds)
-        sleep(0.1)
-        
-    led = 0
-    while led <= 5:
-        leds[110+led] = (225,255,0)
-        leds[349+led] = (225,255,0)
-        client.put_pixels(leds)
-        led=led+1
         sleep(0.1)
     led=0
     while led <3:
         leds[231+led] = (255,0,0)
-        leds[291+led] = (225,255,0)
         client.put_pixels(leds)
         led = led +1
         sleep (0.1)
-    leds[170]= (225,255,0)  
-    leds[172]= (225,255,0)  
-    leds[174]= (225,255,0)
+    leds[173] = (255,0,0)
+    leds[171] = (255,0,0)   
     leds[290]= (255,0,0)  
     leds[294]= (255,0,0)
-    leds[230] = (225,255,0)
-    leds[173] = (255,0,0)
-    leds[171] = (255,0,0)
-    leds[234] = (225,255,0)
     client.put_pixels(leds)
     sleep(0.1)
 
@@ -786,32 +774,9 @@ def fireWorks():
 
 #call function
 #Welcome()
-fireWorks()
+#fireWorks()
 #vortex()
 #mountain()
 #rainDrop()
-if __name__== "__main__":
-    sleep(1)
-    leds=[(255,255,255)]*360
-    client = opc.Client('localhost:7890')
-    client.put_pixels(leds)
-    client.put_pixels(leds)
-    
-    led = 0
-    while led<60: #scroll through all rows at the same time
-        for rows in range(6):
-            leds[led + rows*60] = (0,0,0)
-        client.put_pixels(leds)
-        sleep(.1)
-        led = led + 1
-
-    printY()
-    printE()
-    printA()
-    printR()
-    print_1st2()
-    print0()
-    print_2nd2()
-    print_3rd2()
-    printSad()
+Year2022Sad()
 
