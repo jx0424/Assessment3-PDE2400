@@ -11,7 +11,7 @@ client = opc.Client('localhost:7890')
 client.put_pixels(leds)
 client.put_pixels(leds)
 
-def Welcome():
+def Welcome(): 
 #----------------Letter W----------------------------#
     for rows in range(5):
         leds[62+rows*60]=(148,0,211)
@@ -133,11 +133,13 @@ def vortex():
     leds=[(0,0,0)]*360
     client.put_pixels(leds)   
 #-----------------------rgb value converter---------------------------------------   
+#maximum brightness of colour
     s = 1.0
     v = 1.0
-    #added a counter
+    pixels =[]
+#added a counter
     counter = 0
-    while counter <6:       
+    while counter <3:       
         for hue in range(360):
             rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v)
             r_float = rgb_fractional[0]
@@ -154,38 +156,35 @@ def vortex():
         counter = counter +1
         print ("Repeated for", counter , "time(s)")
         #when counter reaches 5 aka the led cycled 5 times in the board, break loop
-        if counter == 5:
-            break
-        
-    for hue in range(360): # shift through the entire colour spectrum
-        rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v) #colorsys returns floats between 0 and 1
-        print(rgb_fractional) # this is a tuple of 3 elements, R, G, B, set to 0-1 (representing 0-255)
-
-        r_float = rgb_fractional[0] #extract said floating point numbers
-        g_float = rgb_fractional[1]
-        b_float = rgb_fractional[2]
-
-        #r_float, g_float, b_float = rgb_fractional 
-        # this only works if the number of variables is the same as the length of the list (or tuple)
-
-
-        rgb = (r_float*255, g_float*255, b_float*255) #make new tuple with corrected values
-        #if hue == 0:
-        #    pixels.append((255,255,255)) #insert white dot at position 0.
-        #else:
-        pixels.append(rgb) #for loop runs 360 times; each LED gets a slightly different hue. 
-        #we have a rainbow of 360 LEDs in a list, ready to be shifted around
-    while True:
-        for i in range(360):
-            client.put_pixels(pixels)
-            # This rolls the entire tuple forward.
-            #print pixels #debug
-            pixels = numpy.roll(pixels,3) #roll by 3 because func seems to not care about tuples and rolled elements from them by 1.
-            sleep(0.0002) #speed of animation controlled through this
-
-
-
-    
+        #if counter == 3:
+          #  break
+    if counter ==3:
+        led = 0
+        while led<60:
+            for rows in range(6):
+                leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+            led = led +1
+        sleep(0.1)        
+        for hue in range(360): # shift through the entire colour spectrum
+            rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v) #colorsys returns floats between 0 and 1
+            r_float = rgb_fractional[0] #extract said floating point numbers
+            g_float = rgb_fractional[1]
+            b_float = rgb_fractional[2]
+            rgb = (r_float*255, g_float*255, b_float*255) #make new tuple with corrected values
+            pixels.append(rgb)
+        if counter < 6:
+            for i in range(360):
+                client.put_pixels(pixels)
+                pixels = numpy.roll(pixels,3) #roll by 3 because func seems to not care about tuples and rolled elements from them by 1.
+                sleep(0.0002) #speed of animation controlled through this
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+            led = led +1
+   
 #-----------------------------Fucntions for Animation 2 (Year 2022)-----------------------------#      
 #print the letter Y
 def printY():
@@ -425,7 +424,8 @@ def Year2022Happy():
     print_2nd2()
     print_3rd2()
     printSmiley()
-    
+    led = 0
+            
 def year2022():
     list1=['s','S','sad','Sad','SAD']
     list2=['h','H','happy','Happy','HAPPY']
@@ -433,9 +433,21 @@ def year2022():
     while happyOrsad not in list1 or happyOrsad not in list2:
         if happyOrsad in list1:
             Year2022Sad()
+            led = 0
+            while led<60:
+                for rows in range(6):
+                    leds[led + rows*60] = (0,0,0)
+                    client.put_pixels(leds)
+                led = led +1   
             break
         elif happyOrsad in list2:
             Year2022Happy()
+            led = 0
+            while led<60:
+                for rows in range(6):
+                    leds[led + rows*60] = (0,0,0)
+                    client.put_pixels(leds)
+                led = led +1               
             break
         else:
             happyOrsad = input("Please type in an appropriate input: " )
@@ -460,7 +472,13 @@ def rainDrop():
         counter = counter +1      
         if counter ==6:
             break
-        
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+            led = led +1
+            
 def accRain(counter,flood):
     leds = 0
     if counter == 0:
@@ -526,6 +544,12 @@ def SunRiseDawn():
     mountainGen()
     sunRise()
     sunDown()
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+        led = led +1   
 
 
 def mountainGen():
