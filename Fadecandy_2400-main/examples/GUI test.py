@@ -1,5 +1,5 @@
 import tkinter as tk
-import threading
+import numpy
 import opc
 import random
 import time
@@ -129,16 +129,15 @@ def Welcome():
 
 #---------------------Functions for Animation 1(Vortex)----------------------------
 def vortex():
-    #to first set the led to all white
+#To first set the led to all white
     leds=[(0,0,0)]*360
-    client.put_pixels(leds)
-
+    client.put_pixels(leds)   
+#-----------------------rgb value converter---------------------------------------   
     s = 1.0
     v = 1.0
     #added a counter
     counter = 0
-    while True:
-        
+    while counter <6:       
         for hue in range(360):
             rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v)
             r_float = rgb_fractional[0]
@@ -157,7 +156,36 @@ def vortex():
         #when counter reaches 5 aka the led cycled 5 times in the board, break loop
         if counter == 5:
             break
+        
+    for hue in range(360): # shift through the entire colour spectrum
+        rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v) #colorsys returns floats between 0 and 1
+        print(rgb_fractional) # this is a tuple of 3 elements, R, G, B, set to 0-1 (representing 0-255)
 
+        r_float = rgb_fractional[0] #extract said floating point numbers
+        g_float = rgb_fractional[1]
+        b_float = rgb_fractional[2]
+
+        #r_float, g_float, b_float = rgb_fractional 
+        # this only works if the number of variables is the same as the length of the list (or tuple)
+
+
+        rgb = (r_float*255, g_float*255, b_float*255) #make new tuple with corrected values
+        #if hue == 0:
+        #    pixels.append((255,255,255)) #insert white dot at position 0.
+        #else:
+        pixels.append(rgb) #for loop runs 360 times; each LED gets a slightly different hue. 
+        #we have a rainbow of 360 LEDs in a list, ready to be shifted around
+    while True:
+        for i in range(360):
+            client.put_pixels(pixels)
+            # This rolls the entire tuple forward.
+            #print pixels #debug
+            pixels = numpy.roll(pixels,3) #roll by 3 because func seems to not care about tuples and rolled elements from them by 1.
+            sleep(0.0002) #speed of animation controlled through this
+
+
+
+    
 #-----------------------------Fucntions for Animation 2 (Year 2022)-----------------------------#      
 #print the letter Y
 def printY():
@@ -363,7 +391,6 @@ def printSad():
     sleep(0.1)
 
 def Year2022Sad():
-#To reset the board to black to prevent overlapping
     led = 0
     while led<60:
         for rows in range(6):
@@ -380,9 +407,8 @@ def Year2022Sad():
     print_2nd2()
     print_3rd2()
     printSad()
-
+        
 def Year2022Happy():
-#To reset the board to black to prevent overlapping
     led = 0
     while led<60:
         for rows in range(6):
@@ -399,6 +425,22 @@ def Year2022Happy():
     print_2nd2()
     print_3rd2()
     printSmiley()
+    
+def year2022():
+    list1=['s','S','sad','Sad','SAD']
+    list2=['h','H','happy','Happy','HAPPY']
+    happyOrsad= str(input("How is your 2022 so far, Happy or Sad?: "))
+    while happyOrsad not in list1 or happyOrsad not in list2:
+        if happyOrsad in list1:
+            Year2022Sad()
+            break
+        elif happyOrsad in list2:
+            Year2022Happy()
+            break
+        else:
+            happyOrsad = input("Please type in an appropriate input: " )
+        
+
 #-------------Function for Animation 3(RainDrop)--------------------
 def rainDrop():
     global counter
@@ -421,7 +463,6 @@ def rainDrop():
         
 def accRain(counter,flood):
     leds = 0
-    print(counter)
     if counter == 0:
         leds=[(0,0,0)]*360
         client.put_pixels(leds)
@@ -675,9 +716,8 @@ def sunDown():
             leds[40+led] = (0,0,0)
             client.put_pixels(leds)
             led = led + 1
-        print(counter)
         counter = counter +1
-        
+       
 #-----------------------------Animation 5 (FireWorks)-------------------------#
 def fireWorks():
     leds=[(0,0,0)]*360
@@ -686,7 +726,6 @@ def fireWorks():
     while True:
         randExplosion = random.randint(0,3)
         Fhappened= False
-        print(randExplosion)
         randomLoc = random.randint(300,359)
         if Fcounter == 0:
             for led in range(5):
@@ -784,29 +823,42 @@ def fireWorks():
         if Fcounter == 4:
             break
 
-#Welcome()
+Welcome()
 #-----------------------GUI---------------------------------
 window=tk.Tk()
 window.title('Animations by Brendan')
-#window.geometry("500x100")
-
+window.geometry("500x100")
+window.resizable(0,0)
+#-----------------Grid configuration-----------------------
+window.columnconfigure(0, weight =2)
+window.columnconfigure(1, weight =2)
+window.columnconfigure(2, weight =2)
+window.columnconfigure(3, weight =2)
+window.columnconfigure(4, weight =2)
+window.columnconfigure(5, weight =2)
+window.rowconfigure(1, weight =2)
+window.rowconfigure(2, weight =2)
+#-------------------------Text & button---------------------------------
 Flabel = tk.Label(window, text = "Welcome to my Animation!")
-Flabel.pack(pady=20)
-
-animationButton1 = tk.Button(window, text = 'Vortex', command = vortex)
-animationButton2 = tk.Button(window, text = 'Year 2022', command =Year2022Sad)
-animationButton3 = tk.Button(window, text = 'Rain Drop', command = rainDrop)
-animationButton4 = tk.Button(window, text = 'Sun Rise & Dawn', command = SunRiseDawn)
-animationButton5 = tk.Button(window, text = 'Fireworks', command = fireWorks)
-exit_button = tk.Button(window, text = 'Exit', command = window.destroy) #destroy the window, closing the program.
-
-#--------------Format------------
-animationButton1.grid(column = 0, row = 1, padx = 5, pady = 5)
-animationButton2.grid(column = 1, row = 1, padx = 5, pady = 5)
-animationButton3.grid(column = 2, row = 1, padx = 5, pady = 5)
-animationButton4.grid(column = 2, row = 2, padx = 5, pady = 5)
-animationButton5.grid(column = 3, row = 1, padx = 5, pady = 5)
-exit_button.grid(column = 5, row = 5, sticky='e', padx = 5, pady = 5)
-
+#Creating a button for animation 1
+animationButton1 = tk.Button(window, text = 'Vortex', command=vortex, fg="red")
+#Creating a button for animation 2
+animationButton2 = tk.Button(window, text = 'Year2022', command=year2022, fg="orange")
+#Creating a button for animation 3
+animationButton3 = tk.Button(window, text = 'RainDrop', command = rainDrop, fg="purple")
+#Creating a button for animation 4
+animationButton4 = tk.Button(window, text = 'SunRise&Dawn', command = SunRiseDawn, fg="green")
+#Creating a button for animation 5
+animationButton5 = tk.Button(window, text = 'Fireworks', command = fireWorks, fg="blue")
+#Creating a button for exit(to terminate the GUI)
+exit_button = tk.Button(window, text = 'Exit', command = window.destroy , fg="violet") 
+#--------------Format---------------------------------------------------
+Flabel.grid(column =2, row = 0)
+animationButton1.grid(column = 0, row = 1, padx = 5, pady = 1)
+animationButton2.grid(column = 1, row = 1, padx = 5, pady = 1)
+animationButton3.grid(column = 2, row = 1, padx = 5, pady = 1)
+animationButton4.grid(column = 3, row = 1, padx = 5, pady = 1)
+animationButton5.grid(column = 4, row = 1, padx = 5, pady = 1)
+exit_button.grid(column = 5, row = 7, sticky='e', padx = 5, pady = 5)
 
 window.mainloop()
