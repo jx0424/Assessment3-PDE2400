@@ -1,3 +1,5 @@
+import tkinter as tk
+import numpy
 import opc
 import random
 import time
@@ -9,20 +11,20 @@ client = opc.Client('localhost:7890')
 client.put_pixels(leds)
 client.put_pixels(leds)
 
-def Welcome():
+def Welcome(): 
 #----------------Letter W----------------------------#
     for rows in range(5):
-        leds[62+rows*60]=(148,0,211)
+        leds[62+rows*60]=(148,0,211)        
         leds[66+rows*60]=(148,0,211)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     led=0
     for rows in range(3):
         leds[302+led-rows*60]=(148,0,211)
         leds[306-led-rows*60]=(148,0,211)
         client.put_pixels(leds)
         led=led+1
-        sleep(0.1)
+        sleep(0.05)
 
 #--------------Letter E-----------------------------#
     for led in range(5):
@@ -31,58 +33,58 @@ def Welcome():
         leds[309+led]=(75,0,130)
         client.put_pixels(leds)
         led=led+1
-        sleep(0.1)
+        sleep(0.05)
     for rows in range(5):
         leds[69+rows*60]=(75,0,130)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
         
 #-------------Letter L------------------------------#
     for rows in range(5):
         leds[76+rows*60]=(0, 0, 255)	
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     for led in range(5):
         leds[316+led]=(0, 0, 255)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
 
 #-------------------Letter C------------------------#
     for rows in range(5):
         leds[83+rows*60]=(0,255,0)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     for led in range(5):
         leds[83+led]=(0,255,0)
         leds[323+led]=(0,255,0)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
 
 #-----------------Letter O--------------------------#
     for rows in range(5):
         leds[90+rows*60]=(255,255,0)
         leds[94+rows*60]=(255,255,0)    
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     for led in range(5):
         leds[90+led]=(255,255,0)
         leds[330+led]=(255,255,0)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
 
 #---------------Letter M---------------------------#
     for rows in range(5):
         leds[97+rows*60]=(255,127,0)
         leds[101+rows*60]=(255,127,0)    
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     led=0
     for rows in range(3):
         leds[97+led+rows*60]=(255,127,0)
         leds[101-led+rows*60]=(255,127,0)
         client.put_pixels(leds)
         led=led+1
-        sleep(0.1)
+        sleep(0.05)
 
 #-------------Letter 2ndE--------------------------#
     for led in range(5):
@@ -91,60 +93,61 @@ def Welcome():
         leds[344+led]=(255,0,0)
         client.put_pixels(leds)
         led=led+1
-        sleep(0.1)
+        sleep(0.05)
     for rows in range(5):
         leds[104+rows*60]=(255,0,0)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
 
 #----------- 1st !-------------------------------#
     for rows in range(3):
         leds[111+rows*60]=(255,255,255)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     leds[351]=(255,255,255)
     client.put_pixels(leds)
-    sleep(0.1)    
+    sleep(0.05)    
 
 #----------- 2nd !-------------------------------#
     for rows in range(3):
         leds[114+rows*60]=(155,155,155)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     leds[354]=(155,155,155)
     client.put_pixels(leds)
-    sleep(0.1)    
+    sleep(0.05)    
 
 #----------- 3rd !-------------------------------#
     for rows in range(3):
         leds[117+rows*60]=(55,55,55)
         client.put_pixels(leds)
-        sleep(0.1)
+        sleep(0.05)
     leds[357]=(55,55,55)
     client.put_pixels(leds)
-    sleep(0.1)    
+    sleep(0.05)    
 
 
 #---------------------Functions for Animation 1(Vortex)----------------------------
 def vortex():
-    #to first set the led to all white
-    leds=[(255,255,255)]*360
-    client = opc.Client('localhost:7890')
-    client.put_pixels(leds)
-    client.put_pixels(leds)
-
+#To first set the led to all white
+    leds=[(0,0,0)]*360
+    client.put_pixels(leds)   
+#-----------------------rgb value converter---------------------------------------   
+#s & v is set to 1 for maximum brightness 
     s = 1.0
     v = 1.0
-    #added a counter
+#create a empty list
+    pixels =[]
+#Added a counter
     counter = 0
-    while True:
-        
+    #to loop the function when counter is less than 3
+    while counter <3:       
         for hue in range(360):
             rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v)
             r_float = rgb_fractional[0]
             g_float = rgb_fractional[1]
             b_float = rgb_fractional[2]
-            #to randomise the rgb values
+            #to randomise the rgb values (the colour of led)
             rgb = (r_float*random.randint(100,250), g_float*random.randint(100,250), b_float*random.randint(100,250))
             #to cycle the led board from top left to bottom right
             leds[hue] = rgb
@@ -153,38 +156,42 @@ def vortex():
             client.put_pixels(leds)
             time.sleep(.01)
         counter = counter +1
+        #to tell user how many times the loop has repeated 
         print ("Repeated for", counter , "time(s)")
-        #when counter reaches 5 aka the led cycled 5 times in the board, break loop
-        if counter == 5:
-            break
-
-#-----------------------------Fucntions for Animation 2 (Year 2022)-----------------------------#
-def Year2022Sad():
-    printY()
-    printE()
-    printA()
-    printR()
-    print_1st2()
-    print0()
-    print_2nd2()
-    print_3rd2()
-    printSad()
-
-def Year2022Happy():
-    printY()
-    printE()
-    printA()
-    printR()
-    print_1st2()
-    print0()
-    print_2nd2()
-    print_3rd2()
-    printSmiley()
-      
-#print the letter Y
+#when counter reaches 3, it goes into the second phase of the code
+    if counter ==3:
+        led = 0
+        while led<60:
+            for rows in range(6):
+                leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+            led = led +1
+        sleep(0.1)        
+        for hue in range(360): # shift through the entire colour spectrum
+            rgb_fractional = colorsys.hsv_to_rgb(hue/360.0, s, v) #colorsys returns floats between 0 and 1
+            r_float = rgb_fractional[0] #extract said floating point numbers
+            g_float = rgb_fractional[1]
+            b_float = rgb_fractional[2]
+            rgb = (r_float*255, g_float*255, b_float*255) #make new rgb values
+            pixels.append(rgb)
+        if counter < 6:
+            for i in range(360):
+                client.put_pixels(pixels)
+                pixels = numpy.roll(pixels,3)
+                sleep(0.0002)
+#to reset the led board to all black               
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+            led = led +1
+   
+#-----------------------------Fucntions for Animation 2 (Year 2022)-----------------------------#      
+#print the letter Y in red
 def printY():
     for rows in range(4):
-        leds[123+rows*60]=(255,0,0)
+        leds[123+rows*60]=(255,0,0)     
         leds[124+rows*60]=(255,0,0)
         client.put_pixels(leds)
         sleep(0.1)
@@ -193,7 +200,7 @@ def printY():
     client.put_pixels(leds)
     sleep(0.1)
 
-#print the letter E
+#print the letter E in orange
 def printE():
     for rows in range(5):
         leds[68+rows*60]=(255,127,0)
@@ -207,7 +214,7 @@ def printE():
         sleep(0.1)
         led = led +1
 
-#print the letter A
+#print the letter A in yellow
 def printA():
     for rows in range(4):
         leds[134+rows*60]=(255,255,0)
@@ -224,7 +231,7 @@ def printA():
         sleep(0.1)
         led = led +1
 
-#print the letter R
+#print the letter R in green
 def printR():
     for rows in range(5):
         leds[80+rows*60]=(0,255,0)
@@ -248,7 +255,7 @@ def printR():
     client.put_pixels(leds)
     sleep(0.1)
 
-#print the 1st number 2
+#print the 1st number 2 in blue
 def print_1st2():
     led = 0
     while led < 4:
@@ -273,7 +280,7 @@ def print_1st2():
     client.put_pixels(leds)
     sleep(0.1)
 
-#print the number 0
+#print the number 0 in violet
 def print0():
     for rows in range(5):
         leds[92+rows*60]=(75,0,130)
@@ -288,7 +295,7 @@ def print0():
     #client.put_pixels(leds)
     sleep(0.1)
 
-#print the 2nd number 2
+#print the 2nd number 2 in purple 
 def print_2nd2():
     led = 0
     while led < 4:
@@ -313,7 +320,7 @@ def print_2nd2():
     client.put_pixels(leds)
     sleep(0.1)
 
-#print the 3rd number 2
+#print the 3rd number 2 in random colours
 def print_3rd2():
     led = 0
     while led < 4:
@@ -384,12 +391,85 @@ def printSad():
     client.put_pixels(leds)
     sleep(0.1)
 
+#A function to print out year 2022 with a sad face when user input "sad"
+def Year2022Sad():
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+        client.put_pixels(leds)
+        led = led +1
+    sleep(0.1)
+    printY()
+    printE()
+    printA()
+    printR()
+    print_1st2()
+    print0()
+    print_2nd2()
+    print_3rd2()
+    printSad()
+
+#A function to print out year 2022 with happy face when user input "happy"       
+def Year2022Happy():
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+        client.put_pixels(leds)
+        led = led +1
+    sleep(0.1)
+    printY()
+    printE()
+    printA()
+    printR()
+    print_1st2()
+    print0()
+    print_2nd2()
+    print_3rd2()
+    printSmiley()
+    led = 0
+
+#A function to get user's input "sad" or "happy"            
+def year2022():
+    #created 2 list of potential input from users for error prevention and to avoid the code from crashing
+    list1=['s','S','sad','Sad','SAD']
+    list2=['h','H','happy','Happy','HAPPY']
+    #to print out a string to ask input from user
+    happyOrsad= str(input("How is your 2022 so far, Happy or Sad?: "))
+    #loop to ensures that the user inputs a valid answer
+    while happyOrsad not in list1 or happyOrsad not in list2:
+        if happyOrsad in list1:
+            Year2022Sad()
+            led = 0
+            while led<60:
+                for rows in range(6):
+                    leds[led + rows*60] = (0,0,0)
+                    client.put_pixels(leds)
+                led = led +1   
+            break
+        elif happyOrsad in list2:
+            Year2022Happy()
+            led = 0
+            while led<60:
+                for rows in range(6):
+                    leds[led + rows*60] = (0,0,0)
+                    client.put_pixels(leds)
+                led = led +1               
+            break
+        else:
+            happyOrsad = input("Please type in an appropriate input: " )
+        
+
 #-------------Function for Animation 3(RainDrop)--------------------
 def rainDrop():
+    #Create a global "counter" to be use in the loops in this function
     global counter
     counter =0
+    #created a variable to store values for later uses
     flood = 0
-    while True: 
+    #loop the code when counter is less than 6 to simulate a raining scenario
+    while counter < 6: 
         leds=[(0,0,0)]*360
         client.put_pixels(leds)
         led=0
@@ -400,26 +480,30 @@ def rainDrop():
                 led=led+1
                 sleep(0.01)
         flood = accRain(counter,flood)
-        counter = counter +1      
+        counter = counter +1
+        #when the counter reaches 6 break the loop 
         if counter ==6:
             break
-        
+    #Reset the led board to all black
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+            led = led +1
+#A function to simmulate flood            
 def accRain(counter,flood):
     leds = 0
-    print(counter)
     if counter == 0:
         leds=[(0,0,0)]*360
-        client = opc.Client('localhost:7890')
         client.put_pixels(leds)
         for led in range(60):
             leds[300+led]= (0,255,255)
             client.put_pixels(leds)
             led = led +1
-            sleep(0.001)
-        
+            sleep(0.001)        
     if counter == 1:
         leds = flood
-        client = opc.Client('localhost:7890')
         client.put_pixels(leds)
         for led in range(60):
             leds[240+led]= (0,255,255)
@@ -428,7 +512,6 @@ def accRain(counter,flood):
             sleep(0.001)
     if counter == 2:
         leds = flood
-        client = opc.Client('localhost:7890')
         client.put_pixels(leds)
         for led in range(60):
             leds[180+led]= (0,255,255)
@@ -437,7 +520,6 @@ def accRain(counter,flood):
             sleep(0.001)
     if counter == 3:
         leds = flood
-        client = opc.Client('localhost:7890')
         client.put_pixels(leds)
         for led in range(60):
             leds[120+led]= (0,255,255)
@@ -446,7 +528,6 @@ def accRain(counter,flood):
             sleep(0.001)
     if counter == 4:
         leds = flood
-        client = opc.Client('localhost:7890')
         client.put_pixels(leds)
         for led in range(60):
             leds[60+led]= (0,255,255)
@@ -455,7 +536,6 @@ def accRain(counter,flood):
             sleep(0.001)
     if counter == 5:
         leds = flood
-        client = opc.Client('localhost:7890')
         client.put_pixels(leds)
         for led in range(60):
             leds[0+led]= (0,255,255)
@@ -465,10 +545,32 @@ def accRain(counter,flood):
     return leds            
 
 #------------------------ Functions for Animation 4(Sun Rise and Dawn)-------------------
-def mountain():
-    leds=[(0,0,0)]*360
-    client.put_pixels(leds)
-        #First mountain generation
+def SunRiseDawn():
+    #To reset the led board to all black
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+        client.put_pixels(leds)
+        led = led +1
+    sleep(0.1)
+    #call the function to generate 2 mountains
+    mountainGen()
+    #call function to simulate sunrise
+    sunRise()
+    #call function to simulate sundown
+    sunDown()
+    #To reset the led board to all black
+    led = 0
+    while led<60:
+        for rows in range(6):
+            leds[led + rows*60] = (0,0,0)
+            client.put_pixels(leds)
+        led = led +1   
+
+#Function to generate mountains
+def mountainGen():
+#First mountain generation
     for led in range(12):
         leds[303+led]=(0,255,0)
         leds[326-led]=(0,255,0)
@@ -505,18 +607,16 @@ def mountain():
         client.put_pixels(leds)
         sleep(0.01)
         led = led +1
-    led =0
-    while led < 6:
-        leds[327+led]=(255,255,255)
-        leds[267+led]=(255,255,255)
-        leds[207+led]=(255,255,255)
-        leds[147+led]=(255,255,255)
-        leds[87+led]=(255,255,255)
+    for led in range(6):
         leds[27+led]=(255,255,255)
+        leds[87+led]=(255,255,255)
+        leds[147+led]=(255,255,255)
+        leds[207+led]=(255,255,255)
+        leds[267+led]=(255,255,255)
+        leds[327+led]=(255,255,255)
         client.put_pixels(leds)
         sleep(0.01)
-        led = led +1          
-        #2nd mountain generation
+#2nd mountain generation
     for led in range(12):
         leds[333+led]=(0,255,0)
         leds[356-led]=(0,255,0)
@@ -553,15 +653,11 @@ def mountain():
         client.put_pixels(leds)
         sleep(0.01)
         led = led +1
-    sunRise()
-    sleep(1)
-    sunDown()
-    #if counter ==3:
-       # break
-     
+
+#Function to simulate sunrise     
 def sunRise():
     global counter
-    counter = 0  
+    counter = 0
     while counter <3:
         for led in range(2):
             leds[254+led] = (255,0,0)
@@ -571,24 +667,24 @@ def sunRise():
         for led in range(4):
             leds[193+led] = (255,77,0)
             client.put_pixels(leds)
-            sleep(.1)
+            sleep(0.1)
             led = led + 1
         for led in range(6):
             leds[132+led] = (255,103,0)
             client.put_pixels(leds)
-            sleep(.1)
+            sleep(0.1)
             led = led + 1
         for led in range(8):
             leds[71+led] = (255,129,0)
             client.put_pixels(leds)
-            sleep(.1)
+            sleep(0.1)
             led = led + 1
         for led in range(10):
             leds[10+led] = (255,167,0)
             client.put_pixels(leds)
-            sleep(.1)
+            sleep(0.1)
             led = led + 1
-#make whole board black to simulate blink            
+#simulate blink            
         for led in range(2):
             leds[254+led] = (0,0,0)
             client.put_pixels(leds)
@@ -610,7 +706,8 @@ def sunRise():
             client.put_pixels(leds)
             led = led + 1
         counter = counter +1
-        
+
+#Function to simulate sundown        
 def sunDown():
     global counter
     counter =0
@@ -618,22 +715,22 @@ def sunDown():
         for led in range(10):
             leds[40+led] = (255,0,0)
             client.put_pixels(leds)
-            sleep(.1)
+            sleep(0.1)
             led = led + 1
         for led in range(8):
             leds[101+led] = (255,77,0)
             client.put_pixels(leds)
-            sleep(.1)            
+            sleep(0.1)            
             led = led + 1
         for led in range(6):
             leds[162+led] = (255,103,0)
             client.put_pixels(leds)
-            sleep(.1)
+            sleep(0.1)
             led = led + 1
         for led in range(4):
             leds[223+led] = (255,129,0)
             client.put_pixels(leds)
-            sleep(.1)
+            sleep(0.1)
             led = led + 1           
         for led in range(2):
             leds[284+led] = (255,167,0)
@@ -661,22 +758,23 @@ def sunDown():
             leds[40+led] = (0,0,0)
             client.put_pixels(leds)
             led = led + 1
-        print(counter)
         counter = counter +1
-        
-#-----------------------------Animation 5 (FireWorks)-------------------------#
+       
+#-----------------------------Animation 5 (FireWorks with random colours at random location)-------------------------#
 def fireWorks():
+    #Make the led board all black
     leds=[(0,0,0)]*360
     client.put_pixels(leds)
     Fcounter = 0
-    while True:
+    #loop the code when Fcounter is less than 3
+    while Fcounter < 3:
+        #generate a random integer from 0 to 3 to determine the postion of explosion of the firework
         randExplosion = random.randint(0,3)
-        Fhappened= False
-        print(randExplosion)
+        #to generate a random integer from 300 to 359 to make the initial firework appear randomly on the last row of the led board
         randomLoc = random.randint(300,359)
         if Fcounter == 0:
             for led in range(5):
-                leds[randomLoc-led*60]=(255,0,255)
+                leds[randomLoc-led*60]=(random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 sleep(0.3)
                 leds[randomLoc-led*60]=(0,0,0)
@@ -687,7 +785,7 @@ def fireWorks():
                 
         if Fcounter == 1:
             for led in range(5):
-                leds[randomLoc-led*60]=(255,0,255)
+                leds[randomLoc-led*60]=(random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 sleep(0.3)
                 leds[randomLoc-led*60]=(0,0,0)
@@ -698,7 +796,7 @@ def fireWorks():
             
         if Fcounter == 2:
             for led in range(5):
-                leds[randomLoc-led*60]=(255,0,255)
+                leds[randomLoc-led*60]=(random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 sleep(0.3)
                 leds[randomLoc-led*60]=(0,0,0)
@@ -709,7 +807,7 @@ def fireWorks():
 
         if Fcounter ==3:
             for led in range(5):
-                leds[randomLoc-led*60]=(255,0,255)
+                leds[randomLoc-led*60]=(random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 sleep(0.3)
                 leds[randomLoc-led*60]=(0,0,0)
@@ -717,66 +815,642 @@ def fireWorks():
                 sleep(0.3)
                 led = led +1
             Fhappened = 1
-
+#the Fhappened =1 is to sure that the initial accending firework code has happened before the explosion can happen
         if randExplosion == 0 and Fhappened == 1:
             led=0
             for rows in range(6):
-                leds[2+led+rows*60] = (0,255,255)
-                leds[302+led-rows*60] = (0,255,255)
+                leds[2+led+rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+                leds[302+led-rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 led=led+1
             sleep(0.5)
             leds= [(0,0,0)]*360
             client.put_pixels(leds)
             sleep(0.8)
-            
+#the Fhappened =1 is to sure that the initial accending firework code has happened before the explosion can happen            
         if randExplosion == 1 and Fhappened == 1:
             led=0
             for rows in range(6):
-                leds[16+led+rows*60] = (0,255,255)
-                leds[316+led-rows*60] = (0,255,255)
+                leds[16+led+rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+                leds[316+led-rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 led=led+1
             sleep(0.5)
             leds= [(0,0,0)]*360
             client.put_pixels(leds)
             sleep(0.8)
-
+#the Fhappened =1 is to sure that the initial accending firework code has happened before the explosion can happen
         if randExplosion == 2 and Fhappened == 1:
             led=0
             for rows in range(6):
-                leds[30+led+rows*60] = (0,255,255)
-                leds[330+led-rows*60] = (0,255,255)
+                leds[30+led+rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+                leds[330+led-rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 led=led+1
             sleep(0.5)
             leds= [(0,0,0)]*360
             client.put_pixels(leds)
             sleep(0.8)
-
+#the Fhappened =1 is to sure that the initial accending firework code has happened before the explosion can happen
         if randExplosion == 3 and Fhappened == 1:
             led=0
             for rows in range(6):
-                leds[44+led+rows*60] = (0,255,255)
-                leds[344+led-rows*60] = (0,255,255)
+                leds[44+led+rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+                leds[344+led-rows*60] = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 client.put_pixels(leds)
                 led=led+1
             sleep(0.5)
             leds= [(0,0,0)]*360
             client.put_pixels(leds)
-            sleep(0.8) 
-            
+            sleep(0.8)   
         Fcounter = Fcounter +1    
-        if Fcounter == 4:
-            break
+#---------------------Animation 6 (PokemonQuiz)-------------------------------------------#
+def PokemonQuiz():
+    #print out the title of the challenge
+    print("----------Welcome to Pokemon type challenge----------")
+    #generate a random value from 0 to 9 to determine which question to be printed out for the user.
+    randQuestion=random.randint(0,9)
+    #---------------------------List of typing---------------------
+    #These list are to use for user input error handling 
+    list1=['water','Water','WATER']
+    list2=['fire','Fire','FIRE']
+    list3=['grass','Grass','GRASS']
+    list4=['normal','Normal','NORMAL']
+    list5=['electric','Electric','ELECTRIC']
+    list6=['ice','Ice','ICE']
+    list7=['fighting','Fighting','FIGHTING']
+    list8=['poison','Poison','POISON']
+    list9=['ground','Ground','GROUND']
+    list10=['flying','FLYING','Flying']
+    list11=['pychic','Pychic','PYCHIC']
+    list12=['bug','Bug','BUG']
+    list13=['rock','Rock','ROCK']
+    list14=['ghost','Ghost','GHOST']
+    list15=['dragon','Dragon','DRAGON']
+    list16=['Dark','dark','DARK']
+    list17=['Steel','steel','STEEL']
+    list18=['Fairy','fairy','FAIRY']
+#---------------Questions--------------------------
+    if randQuestion==0:
+        Question1=input("Which type is stronger than the other? Normal or Fighting: ")
+        #Error handling
+        while Question1 not in list7 or Question1 not in list4:
+            #when user input a correct answer, all led is green and blink for 5 times
+            if Question1 in list7:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)
+                    sleep(0.05)                    
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question1 in list4:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question1=input("Please enter a valid answer: ")
+            
+    if randQuestion==1:
+        Question2=input("Which type is stronger than the other? Fire or Grass: ")
+        #Error handling
+        while Question2 not in list2 or Question2  not in list3:
+            #when user input a correct answer, all led is green and blink for 5 times
+            if Question2 in list2:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05) 
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1                   
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question2 in list3:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1               
+                break
+            else:
+                Question2= input("Please enter a valid answer: ")
 
+    if randQuestion==2:
+        Question3=input("Which type is stronger than the other? Water or Electric: ")
+        while Question3 not in list5 or Question3 not in list1:
+        #when user input a correct answer, all led is green and blink for 5 times            
+            if Question3 in list5:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05)   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question3 in list1:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question3= input("Please enter a valid answer: ")
+                
+    if randQuestion==3:
+        Question4=input("Which type is stronger than the other? Dragon or Fairy: ")
+        while Question4 not in list18 or Question4 not in list15:
+             #when user input a correct answer, all led is green and blink for 5 times     
+            if Question4 in list18:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05)   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question4 in list15:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question4= input("Please enter a valid answer: ")
+                
+    if randQuestion==4:    
+        Question5=input("Which type is stronger than the other? Dark or Bug: ")
+        while Question5 not in list16 or Question5 not in list12:
+        #when user input a correct answer, all led is green and blink for 5 times         
+            if Question5 in list12:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05) 
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question5 in list16:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question5= input("Please enter a valid answer: ")
+                
+    if randQuestion==5:
+        Question6=input("Which type is stronger than the other? Flying or Rock: ")
+        while Question6 not in list13 or Question6 not in list10:
+        #when user input a correct answer, all led is green and blink for 5 times                 
+            if Question6 in list13:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05)
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question6 in list10:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question6= input("Please enter a valid answer: ")
+                
+    if randQuestion==6:
+        Question7=input("Which type is stronger than the other? Poison or Ground: ")
+        while Question7 not in list9 or Question7 not in list8:
+        #when user input a correct answer, all led is green and blink for 5 times                 
+            if Question7 in list9:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05) 
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question7 in list8:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question7= input("Please enter a valid answer: ")
+        
+    if randQuestion==7:
+        Question8=input("Which type is stronger than the other? Ghost or Dark: ")
+        while Question8 not in list16 or Question8 not in list14:
+        #when user input a correct answer, all led is green and blink for 5 times                 
+            if Question8 in list16:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05)  
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question8 in list14:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question8= input("Please enter a valid answer: ")
+                
+    if randQuestion==8:
+        Question9=input("Which type is stronger than the other? Pychic or Dark: ")
+        while Question9 not in list16 or Question9 not in list11:
+        #when user input a correct answer, all led is green and blink for 5 times                 
+            if Question9 in list16:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05)   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question9 in list11:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question9= input("Please enter a valid answer: ")
 
-
-#call function
-#Welcome()
-#fireWorks()
-#vortex()
-#mountain()
-#rainDrop()
-Year2022Sad()
-
+    if randQuestion==9:
+        Question10=input("Which type is stronger than the other? Ice or Steel: ")
+        while Question10 not in list17 or Question10 not in list6:
+        #when user input a correct answer, all led is green and blink for 5 times                 
+            if Question10 in list17:
+                print("Your answer is ... CORRECT!")
+                loop = 0
+                while loop <5:   
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000001)                        
+                    sleep(0.05)  
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,255,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    loop = loop +1
+                break
+            #when user input a wrong answer, all led is red and blink for 5 times            
+            elif Question10 in list6:
+                print("Your answer is ... WRONG!")
+                loop = 0
+                while loop<5:
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(255,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)
+                    led =0
+                    while led <60:
+                        for rows in range(6):
+                            leds[led + rows*60]=(0,0,0)
+                            client.put_pixels(leds)
+                        led = led +1
+                        sleep(0.000000000001)
+                    sleep(0.05)                      
+                    loop = loop +1
+                break
+            else:
+                Question10= input("Please enter a valid answer: ")
+#Call the function to print out "Welcome !!!"
+Welcome()
+#-----------------------GUI---------------------------------
+#Create a tkinter window
+window=tk.Tk()
+window.title('Animations by Brendan')
+window.geometry("500x100")
+window.resizable(0,0)
+#-----------------Grid configuration-----------------------
+window.columnconfigure(0, weight =2)
+window.columnconfigure(1, weight =2)
+window.columnconfigure(2, weight =2)
+window.columnconfigure(3, weight =2)
+window.columnconfigure(4, weight =2)
+window.columnconfigure(5, weight =2)
+window.rowconfigure(1, weight =2)
+window.rowconfigure(2, weight =2)
+#-------------------------Text & button---------------------------------
+Flabel = tk.Label(window, text = "Welcome to my Animation!")
+#Creating a button for animation 1
+animationButton1 = tk.Button(window, text = 'Vortex', command=vortex, fg="red")
+#Creating a button for animation 2
+animationButton2 = tk.Button(window, text = 'Year2022', command=year2022, fg="orange")
+#Creating a button for animation 3
+animationButton3 = tk.Button(window, text = 'RainDrop', command = rainDrop, fg="purple")
+#Creating a button for animation 4
+animationButton4 = tk.Button(window, text = 'SunRise&Dawn', command = SunRiseDawn, fg="green")
+#Creating a button for animation 5
+animationButton5 = tk.Button(window, text = 'Fireworks', command = fireWorks, fg="blue")
+#Creating a button for animation 6
+animationButton6 = tk.Button(window, text = 'PokeQuiz', command = PokemonQuiz, fg="black")
+#Creating a button for exit(to terminate the GUI)
+exit_button = tk.Button(window, text = 'Exit', command = window.destroy , fg="violet") 
+#--------------Format---------------------------------------------------
+Flabel.grid(column =2, row = 0)
+animationButton1.grid(column = 0, row = 1, padx = 3, pady = 1)
+animationButton2.grid(column = 1, row = 1, padx = 3, pady = 1)
+animationButton3.grid(column = 2, row = 1, padx = 3, pady = 1)
+animationButton4.grid(column = 3, row = 1, padx = 3, pady = 1)
+animationButton5.grid(column = 4, row = 1, padx = 3, pady = 1)
+animationButton6.grid(column = 5, row = 1, padx = 3, pady = 1)
+exit_button.grid(column = 6, row = 7, sticky='e', padx = 5, pady = 5)
+window.mainloop()
